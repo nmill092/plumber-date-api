@@ -1,0 +1,9 @@
+FROM rstudio/plumber
+# Create and change to the app directory.
+WORKDIR .
+# Copy local code to the container image.
+COPY . .
+RUN Rscript install_packages.R
+EXPOSE 5501
+# Run the web service on container startup.
+CMD ["init.R"]
