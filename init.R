@@ -3,6 +3,4 @@ here::i_am("init.R")
 
 library(plumber)
 
-api <- plumb(here("api.R"))
-api$run(port = 8080)
-
+pr(here("api.R")) %>% pr_run(port=5501)
