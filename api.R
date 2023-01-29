@@ -4,12 +4,11 @@ pacman::p_load("lubridate" )
 #* @apiTitle R Plumber Date Calculator
 #* @apiDescription An API that helps you calculate dates in the future or past based on a specified start date.
 
-#* Add or subtract days, weeks, months, or years to or from a specified start date. 
-#* @get /date 
+#* @get /date Add or subtract days, weeks, months, or years to or from a specified start date. 
 #* @serializer unboxedJSON
 #* @param start:str The start time/date, in the format M-D-Y, D-M-Y, or Y-M-D 
 #* @param method:str The operation to perform on the start date. Valid params include "add" or "subtract"
-#* @param number:[int] The number of days, weeks, months, or years to add to the start date (must be an integer). 
+#* @param number:int The number of days, weeks, months, or years to add to the start date (must be an integer). 
 #* @param units:str The unit of time to add. Valid params include "days," "weeks," "months," "years
 function(req, res, start, method, number, units) {
   tryCatch({
