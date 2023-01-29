@@ -4,6 +4,14 @@ pacman::p_load("lubridate" )
 #* @apiTitle R Plumber Date Calculator
 #* @apiDescription An API that helps you calculate dates in the future or past based on a specified start date.
 
+
+#* @filter logger
+function(req) {
+  print(req$argsQuery)
+  print(req$REMOTE_ADDR)
+  plumber::forward()
+}
+
 #* @get /date Add or subtract days, weeks, months, or years to or from a specified start date. 
 #* @serializer unboxedJSON
 #* @param start:str The start time/date, in the format M-D-Y, D-M-Y, or Y-M-D 
