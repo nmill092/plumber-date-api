@@ -88,7 +88,7 @@ function(req, res, tz, sourceTz) {
         isDst = dst(converted_time))
    
  }, error = function(x) { 
-   print(x)
-   list(errorMsg = x, error = "Invalid request. Please GET /time-zones to see a list of available time zones and their required formatting.")
+   print(as.character(x))
+   list(errorMsg = as.character(x), error = "Invalid request. Please GET /time-zones to see a list of available time zones and their required formatting.")
    })
 }
