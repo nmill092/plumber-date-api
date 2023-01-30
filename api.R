@@ -17,6 +17,7 @@ cors <- function(req, res) {
 
 #* @filter logger
 function(req) {
+  print(req$args)
   print(paste(req$REQUEST_METHOD, "request from", req$REMOTE_ADDR))
   plumber::forward()
 }
@@ -77,6 +78,10 @@ function(tz) {
    encoded_tz <- gsub("%20|\\s",replacement = "_", tz)
    converted_time <- with_tz(time = Sys.time(),tzone = encoded_tz)
    difftime_string <- as_hms(Sys.time() - force_tz(Sys.time(), tzone = encoded_tz))
+   
+   print(encoded_tz)
+   print(converted_time)
+   print(difftime_string)
    
    list(sysTime = format(Sys.time(), "%B %d, %Y %I:%M:%S %p"),
         requestedTz = tz,
