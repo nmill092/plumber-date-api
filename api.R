@@ -1,5 +1,3 @@
-print("Launched!")
-
 #* @apiTitle R Plumber Date Calculator
 #* @apiDescription An API that helps you calculate dates in the future or past based on a specified start date.
 

@@ -4,6 +4,6 @@ WORKDIR .
 # Copy local code to the container image.
 COPY . .
 RUN Rscript install_packages.R
-EXPOSE 5501
+EXPOSE 8001
 # Run the web service on container startup.
-CMD ["init.R"]
+ENTRYPOINT ["Rscript", "init.R"]
