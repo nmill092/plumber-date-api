@@ -1,3 +1,5 @@
+pacman::p_load(lubridate, hms)
+
 #* @apiTitle R Plumber Date Calculator
 #* @apiDescription An API that helps you calculate dates in the future or past based on a specified start date.
 
@@ -17,7 +19,6 @@ cors <- function(req, res) {
 
 #* @filter logger
 function(req) {
-  print(req$args)
   print(paste(req$REQUEST_METHOD, "request from", req$REMOTE_ADDR))
   plumber::forward()
 }
@@ -72,24 +73,22 @@ function(req, res) {
 #* @get /time-in
 #* @serializer unboxedJSON
 #* @param tz:str
-function(tz) {
+#* @param sourceTz:str
+function(req, res, tz, sourceTz) {
   
  tryCatch({
-   encoded_tz <- gsub("%20|\\s",replacement = "_", tz)
-   converted_time <- with_tz(time = Sys.time(),tzone = encoded_tz)
-   difftime_string <- as_hms(Sys.time() - force_tz(Sys.time(), tzone = encoded_tz))
+   requestedTz <- gsub("%20|\\s",replacement = "_", tz)
+   converted_time <- with_tz(time = Sys.time(),tzone = requestedTz)
+   difftime_string <- as_hms(force_tz(Sys.time(), tzone = sourceTz) - force_tz(Sys.time(), tzone = requestedTz))
    
-   print(encoded_tz)
-   print(converted_time)
-   print(difftime_string)
-   
-   list(sysTime = format(Sys.time(), "%B %d, %Y %I:%M:%S %p"),
+     list(sysTime = format(Sys.time(), "%B %d, %Y %I:%M:%S %p"),
         requestedTz = tz,
         convertedTime = format(converted_time, "%B %d, %Y %I:%M:%S %p"),
         diffTime = difftime_string,
         isDst = dst(converted_time))
    
  }, error = function(x) { 
-   list(error = "Invalid time zone. Please GET /time-zones to see a list of available time zones and their required formatting.")
+   print(x)
+   list(errorMsg = x, error = "Invalid request. Please GET /time-zones to see a list of available time zones and their required formatting.")
    })
 }
